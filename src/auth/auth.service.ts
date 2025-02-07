@@ -13,23 +13,6 @@ export class AuthService {
         private jwtService: JwtService
     ) {}
 
-    async register(registerDto: RegisterDto): Promise<User> {
-        const { email, password } = registerDto;
-
-        const existingUser = await this.usersService.findOneByEmail(email);
-        if (existingUser) {
-            throw new UnauthorizedException('L\'email existe déjà');
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        try {
-            return this.usersService.create({ email, password: hashedPassword });
-        } catch (error) {
-            throw new UnauthorizedException('Erreur interne');
-        }
-    }
-
     async login(loginDto: LoginDto): Promise<{ access_token: string }> {
         const { email, password } = loginDto;
 
@@ -50,6 +33,23 @@ export class AuthService {
 
         return {
             access_token: await this.jwtService.signAsync(payload)
+        }
+    }
+
+    async register(registerDto: RegisterDto): Promise<User> {
+        const { email, password } = registerDto;
+
+        const existingUser = await this.usersService.findOneByEmail(email);
+        if (existingUser) {
+            throw new UnauthorizedException('L\'email existe déjà');
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        try {
+            return this.usersService.create({ email, password: hashedPassword });
+        } catch (error) {
+            throw new UnauthorizedException('Erreur interne');
         }
     }
 }

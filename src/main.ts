@@ -12,7 +12,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
       .setTitle("MoviieBooker API")
-      .setDescription("Le meilleur système de réservation de films au monde !")
+      .setDescription("reservation movie")
       .setVersion("1.0")
       .addTag('auth')
       .addBearerAuth({
