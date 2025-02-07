@@ -20,11 +20,15 @@ import {Reservation} from "./reservation/entities/reservation.entity";
           database: process.env.DB_NAME,
           entities: [User, Reservation],
           synchronize: true,
+          ssl: {
+            rejectUnauthorized: false,
+          }
       }),
       AuthModule,
       UsersModule,
       MoviesModule,
-      ReservationModule
+      ReservationModule,
+      
   ],
   controllers: [],
   providers: [],
